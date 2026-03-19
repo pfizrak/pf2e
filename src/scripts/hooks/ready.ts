@@ -15,19 +15,6 @@ import Sortable from "sortablejs";
 export const Ready = {
     listen: (): void => {
         Hooks.once("ready", () => {
-            // Proceed no further if forbidden modules are enabled
-            const forbiddenModules = ["pf2e-token-pack", "pf2e-token-pack-character-gallery"];
-            const blanketBanned = game.modules.some(
-                (m) => m.id.startsWith("pf2e-ts-adv") || m.authors.some((a) => a.name === "TaleSale"),
-            );
-            if (blanketBanned || forbiddenModules.some((id) => game.modules.has(id))) {
-                const message = `PF2E system halted: one or more of your modules are not supported.`;
-                ui.notifications.error(message, { permanent: true });
-                CONFIG.PF2E = {} as typeof CONFIG.PF2E;
-                game.pf2e = {} as typeof game.pf2e;
-                return;
-            }
-
             // Once the entire VTT framework is initialized, check to see if we should perform a data migration
             console.log("PF2e System | Starting Pathfinder 2nd Edition System");
             console.debug(`PF2e System | Build mode: ${BUILD_MODE}`);
