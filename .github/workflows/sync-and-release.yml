@@ -147,7 +147,12 @@ jobs:
         run: |
           TAG="${{ needs.check.outputs.pf2e_tag }}"
           BODY=$(gh release view "$TAG" --repo foundryvtt/pf2e --json body -q .body 2>/dev/null || echo "")
-          [ -n "$BODY" ] && echo "$BODY" | gh release edit "$TAG" --repo ${{ github.repository }} --notes-file -
+          if [ -n "$BODY" ]; then
+            for i in $(seq 1 6); do
+              echo "$BODY" | gh release edit "$TAG" --repo ${{ github.repository }} --notes-file - && break
+              sleep 10
+            done
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -178,6 +183,11 @@ jobs:
         run: |
           TAG="${{ needs.check.outputs.sf2e_tag }}"
           BODY=$(gh release view "$TAG" --repo foundryvtt/pf2e --json body -q .body 2>/dev/null || echo "")
-          [ -n "$BODY" ] && echo "$BODY" | gh release edit "$TAG" --repo ${{ github.repository }} --notes-file -
+          if [ -n "$BODY" ]; then
+            for i in $(seq 1 6); do
+              echo "$BODY" | gh release edit "$TAG" --repo ${{ github.repository }} --notes-file - && break
+              sleep 10
+            done
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
