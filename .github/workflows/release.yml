@@ -3,7 +3,7 @@ run-name: System Release (${{ inputs.system }})
 
 on:
   workflow_dispatch:
-    branches: [v13-dev, v14-dev]
+    branches: [v13-dev]
     inputs:
       system:
         description: System

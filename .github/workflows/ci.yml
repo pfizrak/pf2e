@@ -2,11 +2,11 @@ name: Project CI
 
 on:
   pull_request:
-    branches: [v13-dev, v14-dev]
+    branches: [v13-dev]
   push:
-    branches: [v13-dev, v14-dev]
+    branches: [v13-dev]
   workflow_dispatch:
-    branches: [v13-dev, v14-dev]
+    branches: [v13-dev]
 
 jobs:
   build:
