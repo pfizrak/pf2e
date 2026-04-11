@@ -13,17 +13,33 @@ jobs:
   check:
     runs-on: ubuntu-latest
     outputs:
+      upstream_branch: ${{ steps.upstream.outputs.branch }}
       pf2e_needed: ${{ steps.pf2e.outputs.needed }}
       pf2e_tag: ${{ steps.pf2e.outputs.tag }}
       sf2e_needed: ${{ steps.sf2e.outputs.needed }}
       sf2e_tag: ${{ steps.sf2e.outputs.tag }}
 
     steps:
+      - name: Resolve upstream branch
+        id: upstream
+        run: |
+          BRANCH=$(gh api repos/foundryvtt/pf2e --jq .default_branch)
+          [ -n "$BRANCH" ] || { echo "Could not resolve upstream default branch"; exit 1; }
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Check pf2e
         id: pf2e
         run: |
-          TAG=$(gh api repos/foundryvtt/pf2e/releases --jq '[.[] | select(.tag_name | startswith("pf2e-"))] | max_by(.published_at) | .tag_name' 2>/dev/null || echo "")
-          if [ -z "$TAG" ]; then
+          BRANCH="${{ steps.upstream.outputs.branch }}"
+          CONTENT=$(gh api "repos/foundryvtt/pf2e/contents/system.pf2e.json?ref=${BRANCH}" --jq .content | tr -d '\n')
+          [ -n "$CONTENT" ] || { echo "Could not read system.pf2e.json from upstream branch ${BRANCH}"; exit 1; }
+          VERSION=$(printf "%s" "$CONTENT" | base64 -d | jq -r .version)
+          [ -n "$VERSION" ] && [ "$VERSION" != "null" ] || { echo "Could not resolve pf2e version from upstream branch ${BRANCH}"; exit 1; }
+          TAG="pf2e-$VERSION"
+          UPSTREAM_RELEASE=$(gh release view "$TAG" --repo foundryvtt/pf2e --json tagName --jq .tagName 2>/dev/null || echo "")
+          if [ -z "$UPSTREAM_RELEASE" ]; then
             echo "needed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -36,8 +52,14 @@ jobs:
       - name: Check sf2e
         id: sf2e
         run: |
-          TAG=$(gh api repos/foundryvtt/pf2e/releases --jq '[.[] | select(.tag_name | startswith("sf2e-"))] | max_by(.published_at) | .tag_name' 2>/dev/null || echo "")
-          if [ -z "$TAG" ]; then
+          BRANCH="${{ steps.upstream.outputs.branch }}"
+          CONTENT=$(gh api "repos/foundryvtt/pf2e/contents/system.sf2e.json?ref=${BRANCH}" --jq .content | tr -d '\n')
+          [ -n "$CONTENT" ] || { echo "Could not read system.sf2e.json from upstream branch ${BRANCH}"; exit 1; }
+          VERSION=$(printf "%s" "$CONTENT" | base64 -d | jq -r .version)
+          [ -n "$VERSION" ] && [ "$VERSION" != "null" ] || { echo "Could not resolve sf2e version from upstream branch ${BRANCH}"; exit 1; }
+          TAG="sf2e-$VERSION"
+          UPSTREAM_RELEASE=$(gh release view "$TAG" --repo foundryvtt/pf2e --json tagName --jq .tagName 2>/dev/null || echo "")
+          if [ -z "$UPSTREAM_RELEASE" ]; then
             echo "needed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -63,11 +85,20 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Preserve custom workflows
+        run: |
+          mkdir -p /tmp/custom-workflows
+          cp .github/workflows/ci.yml /tmp/custom-workflows/ci.yml
+          cp .github/workflows/release.yml /tmp/custom-workflows/release.yml
+          cp .github/workflows/sync-and-release.yml /tmp/custom-workflows/sync-and-release.yml
+
       - name: Sync with upstream
         run: |
+          BRANCH="${{ needs.check.outputs.upstream_branch }}"
+          [ -n "$BRANCH" ] || { echo "Missing upstream branch output"; exit 1; }
           git remote add upstream https://github.com/foundryvtt/pf2e.git || true
-          git fetch upstream v13-dev
-          git merge upstream/v13-dev --no-edit --allow-unrelated-histories || {
+          git fetch upstream "$BRANCH"
+          git merge "upstream/$BRANCH" --no-edit --allow-unrelated-histories || {
             git checkout --theirs .
             git add .
             git commit --no-edit
@@ -76,42 +107,65 @@ jobs:
       - name: Apply patches
         run: |
           REPO="${{ github.repository }}"
-
-          # 1. Remove forbidden modules block
-          python3 -c "
-          import re
-          with open('src/scripts/hooks/ready.ts', 'r') as f:
-              content = f.read()
-          pattern = r'\s*// Proceed no further if forbidden modules are enabled\n.*?return;\n\s*\}\n'
-          content = re.sub(pattern, '\n', content, flags=re.DOTALL)
-          with open('src/scripts/hooks/ready.ts', 'w') as f:
-              f.write(content)
-          "
-
-          # 2. Rewrite manifest URLs to point to this fork
+          mkdir -p .github/workflows
+          cp /tmp/custom-workflows/ci.yml .github/workflows/ci.yml
+          cp /tmp/custom-workflows/release.yml .github/workflows/release.yml
+          cp /tmp/custom-workflows/sync-and-release.yml .github/workflows/sync-and-release.yml
           python3 << 'PYEOF'
-          import json, sys
+          import json
+          from pathlib import Path
 
           repo = "${{ github.repository }}"
 
           for system in ["pf2e", "sf2e"]:
-              path = f"system.{system}.json"
-              with open(path) as f:
+              path = Path(f"system.{system}.json")
+              if not path.is_file():
+                  raise SystemExit(f"Missing manifest: {path}")
+
+              with path.open() as f:
                   data = json.load(f)
 
               version = data["version"]
-              data["manifest"] = f"https://raw.githubusercontent.com/{repo}/v13-dev/system.{system}.json"
-              data["download"] = f"https://github.com/{repo}/releases/download/{system}-{version}/system.zip"
-              data["changelog"] = f"https://github.com/{repo}/blob/v13-dev/CHANGELOG.md"
-              data["url"] = f"https://github.com/{repo}"
-              data["bugs"] = f"https://github.com/{repo}/issues"
-              for author in data.get("authors", []):
-                  if "url" in author:
+              authors = data.get("authors")
+
+              if not isinstance(version, str) or not version:
+                  raise SystemExit(f"Manifest {path} has invalid version: {version!r}")
+              if not isinstance(authors, list):
+                  raise SystemExit(f"Manifest {path} has invalid authors list")
+
+              expected_manifest = f"https://raw.githubusercontent.com/{repo}/v13-dev/system.{system}.json"
+              expected_download = f"https://github.com/{repo}/releases/download/{system}-{version}/system.zip"
+              expected_changelog = f"https://github.com/{repo}/blob/v13-dev/CHANGELOG.md"
+              expected_url = f"https://github.com/{repo}"
+              expected_bugs = f"https://github.com/{repo}/issues"
+
+              data["manifest"] = expected_manifest
+              data["download"] = expected_download
+              data["changelog"] = expected_changelog
+              data["url"] = expected_url
+              data["bugs"] = expected_bugs
+              for author in authors:
+                  if isinstance(author, dict) and "url" in author:
                       author["url"] = author["url"].replace("foundryvtt/pf2e", repo)
 
-              with open(path, "w") as f:
+              with path.open("w") as f:
                   json.dump(data, f, indent=4, ensure_ascii=False)
                   f.write("\n")
+
+              with path.open() as f:
+                  rewritten = json.load(f)
+
+              checks = {
+                  "manifest": expected_manifest,
+                  "download": expected_download,
+                  "changelog": expected_changelog,
+                  "url": expected_url,
+                  "bugs": expected_bugs,
+              }
+              for key, expected in checks.items():
+                  actual = rewritten.get(key)
+                  if actual != expected:
+                      raise SystemExit(f"Manifest {path} failed validation for {key}: {actual!r} != {expected!r}")
           PYEOF
 
           git add -A
@@ -129,12 +183,13 @@ jobs:
       - name: Trigger and wait
         run: |
           BEFORE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          RUN_NAME="System Release (pf2e)"
           gh workflow run release.yml --repo ${{ github.repository }} --ref v13-dev -f system=pf2e
           sleep 10
           RUN_ID=""
           for i in $(seq 1 30); do
             RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/release.yml/runs \
-              --jq "[.workflow_runs[] | select(.created_at >= \"$BEFORE\" and .display_title == \"System Release\")][0].id" 2>/dev/null || echo "")
+              --jq "[.workflow_runs[] | select(.created_at >= \"$BEFORE\" and .display_title == \"$RUN_NAME\")][0].id" 2>/dev/null || echo "")
             [ -n "$RUN_ID" ] && break
             sleep 5
           done
@@ -165,12 +220,13 @@ jobs:
       - name: Trigger and wait
         run: |
           BEFORE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          RUN_NAME="System Release (sf2e)"
           gh workflow run release.yml --repo ${{ github.repository }} --ref v13-dev -f system=sf2e
           sleep 10
           RUN_ID=""
           for i in $(seq 1 30); do
             RUN_ID=$(gh api repos/${{ github.repository }}/actions/workflows/release.yml/runs \
-              --jq "[.workflow_runs[] | select(.created_at >= \"$BEFORE\" and .display_title == \"System Release\")][0].id" 2>/dev/null || echo "")
+              --jq "[.workflow_runs[] | select(.created_at >= \"$BEFORE\" and .display_title == \"$RUN_NAME\")][0].id" 2>/dev/null || echo "")
             [ -n "$RUN_ID" ] && break
             sleep 5
           done

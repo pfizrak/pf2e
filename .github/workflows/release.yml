@@ -1,4 +1,5 @@
 name: System Release
+run-name: System Release (${{ inputs.system }})
 
 on:
   workflow_dispatch:
