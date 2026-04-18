@@ -5,11 +5,11 @@
     "description": "A community contributed game system for Pathfinder Second Edition",
     "version": "8.0.3",
     "license": "./LICENSE",
-    "manifest": "https://raw.githubusercontent.com/foundryvtt/pf2e/v14-dev/system.pf2e.json",
-    "download": "https://github.com/foundryvtt/pf2e/releases/download/pf2e-8.0.3/system.zip",
-    "changelog": "https://raw.githubusercontent.com/foundryvtt/pf2e/refs/heads/v14-dev/CHANGELOG.md",
-    "url": "https://github.com/foundryvtt/pf2e",
-    "bugs": "https://github.com/foundryvtt/pf2e/issues",
+    "manifest": "https://raw.githubusercontent.com/pfizrak/pf2e/v13-dev/system.pf2e.json",
+    "download": "https://github.com/pfizrak/pf2e/releases/download/pf2e-8.0.3/system.zip",
+    "changelog": "https://github.com/pfizrak/pf2e/blob/v13-dev/CHANGELOG.md",
+    "url": "https://github.com/pfizrak/pf2e",
+    "bugs": "https://github.com/pfizrak/pf2e/issues",
     "background": "systems/pf2e/assets/system-banners/03.webp",
     "socket": true,
     "primaryTokenAttribute": "attributes.hp",
@@ -21,7 +21,7 @@
     "authors": [
         {
             "name": "The PF2e System Developers",
-            "url": "https://github.com/foundryvtt/pf2e",
+            "url": "https://github.com/pfizrak/pf2e",
             "flags": {}
         }
     ],
