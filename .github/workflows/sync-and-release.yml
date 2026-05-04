@@ -85,12 +85,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Preserve custom workflows
+      - name: Preserve local overrides
         run: |
-          mkdir -p /tmp/custom-workflows
-          cp .github/workflows/ci.yml /tmp/custom-workflows/ci.yml
-          cp .github/workflows/release.yml /tmp/custom-workflows/release.yml
-          cp .github/workflows/sync-and-release.yml /tmp/custom-workflows/sync-and-release.yml
+          mkdir -p /tmp/local-overrides/.github/workflows
+          cp .github/workflows/ci.yml /tmp/local-overrides/.github/workflows/ci.yml
+          cp .github/workflows/release.yml /tmp/local-overrides/.github/workflows/release.yml
+          cp .github/workflows/sync-and-release.yml /tmp/local-overrides/.github/workflows/sync-and-release.yml
 
       - name: Sync with upstream
         run: |
@@ -107,22 +107,53 @@ jobs:
       - name: Apply patches
         run: |
           REPO="${{ github.repository }}"
+          BRANCH="${{ github.ref_name }}"
+          rm -rf .github/workflows
           mkdir -p .github/workflows
-          cp /tmp/custom-workflows/ci.yml .github/workflows/ci.yml
-          cp /tmp/custom-workflows/release.yml .github/workflows/release.yml
-          cp /tmp/custom-workflows/sync-and-release.yml .github/workflows/sync-and-release.yml
+          cp /tmp/local-overrides/.github/workflows/ci.yml .github/workflows/ci.yml
+          cp /tmp/local-overrides/.github/workflows/release.yml .github/workflows/release.yml
+          cp /tmp/local-overrides/.github/workflows/sync-and-release.yml .github/workflows/sync-and-release.yml
           python3 << 'PYEOF'
           import json
           from pathlib import Path
 
           repo = "${{ github.repository }}"
+          branch = "${{ github.ref_name }}"
+
+          ready_path = Path("src/scripts/hooks/ready.ts")
+          ready_text = ready_path.read_text(encoding="utf-8")
+          forbidden_block = """            // Proceed no further if forbidden modules are enabled
+            const forbiddenModules = ["pf2e-token-pack", "pf2e-token-pack-character-gallery"];
+            const blanketBanned = game.modules.some(
+                (m) => m.id.startsWith("pf2e-ts-adv") || m.authors.some((a) => a.name === "TaleSale"),
+            );
+            if (blanketBanned || forbiddenModules.some((id) => game.modules.has(id))) {
+                const message = `PF2E system halted: one or more of your modules are not supported.`;
+                ui.notifications.error(message, { permanent: true });
+                CONFIG.PF2E = {} as typeof CONFIG.PF2E;
+                game.pf2e = {} as typeof game.pf2e;
+                return;
+            }
+
+"""
+          if forbidden_block in ready_text:
+              ready_text = ready_text.replace(forbidden_block, "")
+              ready_path.write_text(ready_text, encoding="utf-8")
+
+          if "PF2E system halted: one or more of your modules are not supported." in ready_path.read_text(encoding="utf-8"):
+              raise SystemExit("ready.ts still contains the forbidden-modules halt block")
+
+          changelogs = {
+              "pf2e": "CHANGELOG.md",
+              "sf2e": "CHANGELOG.md",
+          }
 
           for system in ["pf2e", "sf2e"]:
               path = Path(f"system.{system}.json")
               if not path.is_file():
                   raise SystemExit(f"Missing manifest: {path}")
 
-              with path.open() as f:
+              with path.open(encoding="utf-8") as f:
                   data = json.load(f)
 
               version = data["version"]
@@ -133,9 +164,9 @@ jobs:
               if not isinstance(authors, list):
                   raise SystemExit(f"Manifest {path} has invalid authors list")
 
-              expected_manifest = f"https://raw.githubusercontent.com/{repo}/v13-dev/system.{system}.json"
+              expected_manifest = f"https://raw.githubusercontent.com/{repo}/{branch}/system.{system}.json"
               expected_download = f"https://github.com/{repo}/releases/download/{system}-{version}/system.zip"
-              expected_changelog = f"https://github.com/{repo}/blob/v13-dev/CHANGELOG.md"
+              expected_changelog = f"https://github.com/{repo}/blob/{branch}/{changelogs[system]}"
               expected_url = f"https://github.com/{repo}"
               expected_bugs = f"https://github.com/{repo}/issues"
 
@@ -148,11 +179,11 @@ jobs:
                   if isinstance(author, dict) and "url" in author:
                       author["url"] = author["url"].replace("foundryvtt/pf2e", repo)
 
-              with path.open("w") as f:
+              with path.open("w", encoding="utf-8") as f:
                   json.dump(data, f, indent=4, ensure_ascii=False)
                   f.write("\n")
 
-              with path.open() as f:
+              with path.open(encoding="utf-8") as f:
                   rewritten = json.load(f)
 
               checks = {
@@ -184,7 +215,7 @@ jobs:
         run: |
           BEFORE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
           RUN_NAME="System Release (pf2e)"
-          gh workflow run release.yml --repo ${{ github.repository }} --ref v13-dev -f system=pf2e
+          gh workflow run release.yml --repo ${{ github.repository }} --ref "${{ github.ref_name }}" -f system=pf2e
           sleep 10
           RUN_ID=""
           for i in $(seq 1 30); do
@@ -221,7 +252,7 @@ jobs:
         run: |
           BEFORE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
           RUN_NAME="System Release (sf2e)"
-          gh workflow run release.yml --repo ${{ github.repository }} --ref v13-dev -f system=sf2e
+          gh workflow run release.yml --repo ${{ github.repository }} --ref "${{ github.ref_name }}" -f system=sf2e
           sleep 10
           RUN_ID=""
           for i in $(seq 1 30); do
