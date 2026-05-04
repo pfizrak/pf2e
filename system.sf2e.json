@@ -3,11 +3,11 @@
     "type": "system",
     "title": "Starfinder Second Edition",
     "description": "A community contributed game system for Starfinder Second Edition",
-    "version": "1.0.3",
+    "version": "1.1.1",
     "license": "./LICENSE",
     "manifest": "https://raw.githubusercontent.com/pfizrak/pf2e/v13-dev/system.sf2e.json",
-    "download": "https://github.com/pfizrak/pf2e/releases/download/sf2e-1.0.3/system.zip",
-    "changelog": "https://github.com/pfizrak/pf2e/blob/v13-dev/CHANGELOG.md",
+    "download": "https://github.com/pfizrak/pf2e/releases/download/sf2e-1.1.1/system.zip",
+    "changelog": "https://github.com/pfizrak/pf2e/blob/v13-dev/CHANGELOG%20(SF2E).md",
     "url": "https://github.com/pfizrak/pf2e",
     "bugs": "https://github.com/pfizrak/pf2e/issues",
     "background": "systems/sf2e/assets/system-banners/03.webp",
@@ -205,6 +205,19 @@
             "name": "rulebook-bestiaries",
             "label": "Rulebooks",
             "path": "packs/rulebook-bestiaries",
+            "type": "Actor",
+            "banner": "systems/sf2e/assets/compendium-banner/red.webp",
+            "system": "sf2e",
+            "ownership": {
+                "PLAYER": "LIMITED",
+                "ASSISTANT": "OWNER"
+            },
+            "flags": {}
+        },
+        {
+            "name": "tales-from-the-vast-bestiary",
+            "label": "Tales from the Vast",
+            "path": "packs/tales-from-the-vast-bestiary",
             "type": "Actor",
             "banner": "systems/sf2e/assets/compendium-banner/red.webp",
             "system": "sf2e",
@@ -498,7 +511,8 @@
                 "guilt-of-the-grave-world-bestiary",
                 "rulebook-bestiaries",
                 "standalone-adventure-bestiary",
-                "starfinder-society-bestiary"
+                "starfinder-society-bestiary",
+                "tales-from-the-vast-bestiary"
             ]
         },
         {

@@ -253,3 +253,7 @@ export { Migration952AmmoTraitsAndOptions } from "./952-ammo-traits-options.ts";
 export { Migration953NotStrikeDamage } from "./953-not-strike-damage.ts";
 export { Migration954ExplicitBleedImmunity } from "./954-explicit-bleed-immunity.ts";
 export { Migration955HazardNullSaves } from "./955-hazard-null-saves.ts";
+export { Migration956DragonChoiceLocalizationKeys } from "./956-dragonchoice-localization-keys.ts";
+export { Migration957SF2eAnachronismImages } from "./957-sf2e-anachronism-images.ts";
+export { Migration958GnollGrippliRemaster } from "./958-gnoll-grippli-remaster.ts";
+export { Migration959ChangeShapeLocalizationKeys } from "./959-changeshape-localization-keys.ts";

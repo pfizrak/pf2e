@@ -68,7 +68,7 @@ class SpellOverlayCollection extends Collection<string, SpellOverlay> {
         const variantSource = R.omit(variantSpell.toObject(), ["_stats"]);
         const originSource = R.omit(this.spell.toObject(), ["_stats"]);
         type SpellDiff = { overlayType: string; system?: { description?: object } };
-        const difference = fu.diffObject<SpellDiff>(originSource, variantSource);
+        const difference = fu.diffObject(originSource, variantSource) as SpellDiff;
         if (Object.keys(difference).length === 0) return variantSpell;
 
         // Always remove the spell description if it makes it this far
@@ -81,10 +81,7 @@ class SpellOverlayCollection extends Collection<string, SpellOverlay> {
 
     async deleteOverlay(overlayId: string): Promise<void> {
         this.verifyOverlayId(overlayId);
-
-        await this.spell.update({
-            [`system.overlays.-=${overlayId}`]: null,
-        });
+        await this.spell.update({ [`system.overlays.${overlayId}`]: _del });
         this.delete(overlayId);
     }
 

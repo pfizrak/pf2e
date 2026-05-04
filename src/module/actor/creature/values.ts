@@ -87,7 +87,6 @@ const UNCOMMON_LANGUAGES = [
     "diabolic",
     "ekujae",
     "empyrean",
-    "grippli",
     "hallit",
     "iruxi",
     "kelish",
@@ -115,6 +114,7 @@ const UNCOMMON_LANGUAGES = [
     "tengu",
     "thalassic",
     "tien",
+    "tripkee",
     "utopian",
     "vanara",
     "varisian",
@@ -201,6 +201,7 @@ const COMMON_SF_LANGUAGES = [
 
 const UNCOMMON_SF_LANGUAGES = [
     "aballonian",
+    "acsie",
     "aklo",
     "alghollthu",
     "azlanti",
@@ -208,6 +209,7 @@ const UNCOMMON_SF_LANGUAGES = [
     "brenneri",
     "chthonian",
     "copaxi",
+    "coshyco",
     "daemonic",
     "diabolic",
     "dwarven",

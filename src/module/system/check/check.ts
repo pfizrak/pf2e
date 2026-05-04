@@ -69,9 +69,7 @@ class Check {
                 modifiers: check.modifiers,
             };
         }
-        if (!context.origin?.actor && !context.target?.actor) {
-            return null;
-        }
+        if (!context.origin?.actor && !context.target?.actor) return null;
 
         // If event is supplied, merge into context
         // Eventually the event parameter will go away entirely
@@ -86,16 +84,16 @@ class Check {
             rollOptions.add(`map:increases:${context.mapIncreases}`);
         }
 
-        // Figure out the default message-visibility mode (if not already set by the event)
-        // ignore the secret trait if the ignoreSecretTrait setting is enabled
-        if (rollOptions.has("secret") && !game.pf2e.settings.metagame.secretChecks) {
-            context.messageMode ??= game.user.isGM ? "gm" : "blind";
+        if (!context.isReroll) {
+            const showSecretChecks = game.pf2e.settings.metagame.secretChecks;
+            if (rollOptions.has("secret") && !showSecretChecks) context.messageMode = game.user.isGM ? "gm" : "blind";
+            if (rollOptions.size > 0) check.calculateTotal(rollOptions);
         }
         context.messageMode = objectHasKey(CONFIG.ChatMessage.modes, context.messageMode)
             ? context.messageMode
             : game.settings.get("core", "messageMode");
 
-        if (rollOptions.size > 0 && !context.isReroll) check.calculateTotal(rollOptions);
+        // Process roll substitution
         context.substitutions ??= [];
         const requiredSubstitution = context.substitutions.find((s) => s.required && s.selected);
         if (requiredSubstitution) {
@@ -217,7 +215,6 @@ class Check {
             );
         })();
         const degree = context.dc ? new DegreeOfSuccess(roll, context.dc, dosAdjustments) : null;
-
         if (degree) {
             context.outcome = DEGREE_OF_SUCCESS_STRINGS[degree.value];
             context.unadjustedOutcome = DEGREE_OF_SUCCESS_STRINGS[degree.unadjusted];
@@ -245,13 +242,10 @@ class Check {
                     return !!(outcome && note.outcome.includes(outcome));
                 }) ?? [];
         const notesList = RollNotePF2e.notesToHTML(notes);
-
         const item = context.item ?? null;
-
         const targeting = !!context.origin?.self;
         const self = targeting ? (context.origin ?? null) : (context.target ?? null);
         const opposer = targeting ? (context.target ?? null) : (context.origin ?? null);
-
         const flavor = await (async (): Promise<string> => {
             const result = await this.#createResultFlavor({ degree, self, opposer, targeting });
             const tags = this.#createTagFlavor({ check, context, extraTags });
@@ -320,7 +314,6 @@ class Check {
             const create = context.createMessage;
             return roll.toMessage({ speaker, flavor, flags }, { messageMode, create }) as MessagePromise;
         })();
-
         if (callback) {
             const msg = message instanceof ChatMessagePF2e ? message : new ChatMessagePF2e(message);
             await callback(roll, context.outcome, msg, event);
@@ -470,7 +463,9 @@ class Check {
         const unevaluatedNewRoll = ((): CheckRoll => {
             if (resource?.slug !== "mythic-points" || !actor.isOfType("character")) return oldRoll.clone();
             // Create a new CheckRoll in case of a mythic point reroll
-            const proficiencyModifier = (systemFlags.modifiers ?? []).find((m) => m.slug === "proficiency");
+            const proficiencyModifier = (systemFlags.modifiers ?? []).find(
+                (m) => m.type === "proficiency" && m.enabled,
+            );
             if (!proficiencyModifier) {
                 throw ErrorPF2e(`Failed to reroll check with a mythic point. Check is missing a proficiency modifier!`);
             }
@@ -588,7 +583,10 @@ class Check {
 
                   // Add mythic proficiency tag
                   if (resource?.slug === "mythic-points") {
-                      const proficiencyTag = htmlQuery(parsedFlavor, "span[data-slug=proficiency]");
+                      const previousSlug =
+                          systemFlags.modifiers?.find((m) => m.type === "proficiency" && m.enabled)?.slug ??
+                          "proficiency";
+                      const proficiencyTag = htmlQuery(parsedFlavor, `span[data-slug=${previousSlug}]`);
                       if (proficiencyTag) {
                           const mythicTag = proficiencyTag.cloneNode() as HTMLElement;
                           proficiencyTag.style.textDecorationLine = "line-through";

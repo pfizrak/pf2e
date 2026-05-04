@@ -3,10 +3,10 @@
     "type": "system",
     "title": "Pathfinder Second Edition",
     "description": "A community contributed game system for Pathfinder Second Edition",
-    "version": "8.0.3",
+    "version": "8.1.1",
     "license": "./LICENSE",
     "manifest": "https://raw.githubusercontent.com/pfizrak/pf2e/v13-dev/system.pf2e.json",
-    "download": "https://github.com/pfizrak/pf2e/releases/download/pf2e-8.0.3/system.zip",
+    "download": "https://github.com/pfizrak/pf2e/releases/download/pf2e-8.1.1/system.zip",
     "changelog": "https://github.com/pfizrak/pf2e/blob/v13-dev/CHANGELOG.md",
     "url": "https://github.com/pfizrak/pf2e",
     "bugs": "https://github.com/pfizrak/pf2e/issues",
@@ -333,6 +333,19 @@
             "flags": {}
         },
         {
+            "name": "hells-destiny-bestiary",
+            "label": "Hell's Destiny",
+            "path": "packs/hells-destiny-bestiary",
+            "type": "Actor",
+            "banner": "systems/pf2e/assets/compendium-banner/red.webp",
+            "system": "pf2e",
+            "ownership": {
+                "PLAYER": "LIMITED",
+                "ASSISTANT": "OWNER"
+            },
+            "flags": {}
+        },
+        {
             "name": "lost-omens-bestiary",
             "label": "Lost Omens Bestiary",
             "path": "packs/lost-omens-bestiary",
@@ -360,7 +373,7 @@
         },
         {
             "name": "menace-under-otari-bestiary",
-            "label": "Menace Under Otari",
+            "label": "Beginner Box",
             "path": "packs/menace-under-otari-bestiary",
             "type": "Actor",
             "banner": "systems/pf2e/assets/compendium-banner/red.webp",
@@ -791,6 +804,19 @@
             "name": "troubles-in-otari-bestiary",
             "label": "Troubles in Otari",
             "path": "packs/troubles-in-otari-bestiary",
+            "type": "Actor",
+            "banner": "systems/pf2e/assets/compendium-banner/red.webp",
+            "system": "pf2e",
+            "ownership": {
+                "PLAYER": "LIMITED",
+                "ASSISTANT": "OWNER"
+            },
+            "flags": {}
+        },
+        {
+            "name": "troubles-in-grayce-bestiary",
+            "label": "Troubles in Grayce",
+            "path": "packs/troubles-in-grayce-bestiary",
             "type": "Actor",
             "banner": "systems/pf2e/assets/compendium-banner/red.webp",
             "system": "pf2e",
@@ -1354,6 +1380,7 @@
                         "fists-of-the-ruby-phoenix-bestiary",
                         "gatewalkers-bestiary",
                         "hellbreakers-bestiary",
+                        "hells-destiny-bestiary",
                         "outlaws-of-alkenstar-bestiary",
                         "kingmaker-bestiary",
                         "myth-speaker-bestiary",
@@ -1406,6 +1433,7 @@
                         "shadows-at-sundown-bestiary",
                         "the-enmity-cycle-bestiary",
                         "the-slithering-bestiary",
+                        "troubles-in-grayce-bestiary",
                         "troubles-in-otari-bestiary"
                     ]
                 },
