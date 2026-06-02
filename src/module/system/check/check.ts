@@ -560,9 +560,9 @@ class Check {
 
         const rerollIcon = fontAwesomeIcon(
             resource?.slug === "hero-points"
-                ? "hospital-symbol"
+                ? "fa-circle-h"
                 : resource?.slug === "mythic-points"
-                  ? "circle-m"
+                  ? "fa-circle-m"
                   : "dice",
         );
         rerollIcon.classList.add("reroll-indicator");
@@ -716,7 +716,8 @@ class Check {
                 return fromUuid(opposer.token) as Promise<TokenDocumentPF2e<ScenePF2e> | null>;
             })();
 
-            const canSeeTokenName = token ?? (await opposingActor?.getTokenDocument())?.playersCanSeeName;
+            const canSeeTokenName =
+                token?.playersCanSeeName ?? (await opposingActor?.getTokenDocument())?.playersCanSeeName;
             const canSeeName = canSeeTokenName || !game.pf2e.settings.tokens.nameVisibility;
             return {
                 name: token?.name ?? opposingActor?.name ?? "",
