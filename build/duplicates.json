@@ -2,18 +2,28 @@
     {
         "publication": null,
         "entries": {
+            "conditions": [
+                "Cursebound"
+            ],
             "deities": [
                 "Sarenrae"
             ],
             "equipment": [
                 "Invisibility Potion"
             ],
+            "feats": [
+                "Forager"
+            ],
             "spells": [
                 "Blessed Boundary",
                 "Divine Decree",
                 "Geas",
                 "Unfathomable Song",
-                "Ventriloquism"
+                "Ventriloquism",
+                "Tangling Creepers"
+            ],
+            "spell-effects": [
+                "Spell Effect: Tangling Creepers"
             ]
         }
     },

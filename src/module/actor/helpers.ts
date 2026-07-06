@@ -492,9 +492,7 @@ function strikeFromMeleeItem(item: MeleePF2e<ActorPF2e>): NPCStrike {
     const attackSlug = item.slug ?? sluggify(item.name);
     const statistic = new StatisticModifier(attackSlug, modifiers, initialRollOptions);
 
-    const actionTraits: AbilityTrait[] = (
-        ["attack", item.baseType === "alchemical-bomb" ? "manipulate" : null] as const
-    ).filter(R.isTruthy);
+    const actionTraits: AbilityTrait[] = ["attack"];
     const strikeAdjustments = [
         actor.synthetics.strikeAdjustments,
         getPropertyRuneStrikeAdjustments(item.system.runes.property),
@@ -885,7 +883,14 @@ async function createAreaAttackMessage({
         areaLabel: createEffectAreaLabel(area),
         saveBreakdown: dc.breakdown,
     });
-    const context: AreaAttackContextFlag = { type: action, area, identifier, domains: dc.domains, options };
+    const context: AreaAttackContextFlag = {
+        type: action,
+        area,
+        identifier,
+        domains: dc.domains,
+        options,
+        dc: R.pick(dc, ["value", "label"]),
+    };
     const flags = { [SYSTEM_ID]: { context, origin: item.getOriginData() } };
     await ChatMessagePF2e.create({ flavor, content, speaker, flags });
 }
