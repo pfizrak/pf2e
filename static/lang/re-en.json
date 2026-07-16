@@ -819,6 +819,10 @@
                 "SavingThrow": "Saving Throws",
                 "Skill": "Skill Checks"
             },
+            "CoinFlip": {
+                "Heads": "Heads",
+                "Tails": "Tails"
+            },
             "ItemVs": {
                 "DeathVoid": "{item} vs. Death and Void effects",
                 "Fear": "{item} vs. fear"
@@ -838,6 +842,10 @@
             "TargetNumber": {
                 "Multiple": "Multiple targets",
                 "Single": "Single target"
+            },
+            "Time": {
+                "Daytime": "Daytime",
+                "Nighttime": "Nighttime"
             }
         },
         "HazardAbility": {
@@ -998,6 +1006,11 @@
                     "Label": "Asper's Elemental Aura"
                 }
             },
+            "AugstenArudora": {
+                "BullyTheBully": {
+                    "BullyingCommand": "Augsten can't use Bullying Command due to Bully the Bully."
+                }
+            },
             "BarghestFeed": "How many times has the Barghest fed?",
             "Beheaded": {
                 "Bleeding": {
@@ -1020,6 +1033,14 @@
                 },
                 "Whispering": {
                     "Name": "Whispering"
+                }
+            },
+            "BastardhallPhantom": {
+                "SupportRank": {
+                    "RequirementAddendum": {
+                        "RankOne": "This ability requires support rank 1."
+                    },
+                    "Label": "Support Rank"
                 }
             },
             "Belimarius": {
@@ -3150,6 +3171,11 @@
                     "ImmunityLabel": "powerful utterance"
                 }
             },
+            "Voldrak": {
+                "FrightfulPresence": {
+                    "ToggleLabel": "Frightful Presence — Underwater"
+                }
+            },
             "Volodmyra": {
                 "OverhandSmash": {
                     "Note": "If the attack hits, the opponent must succeed at a @Check[fortitude|dc:17|options:inflicts:prone] save to avoid being knocked @UUID[Compendium.pf2e.conditionitems.Item.j91X7x0XSomq8d60]{Prone}."
@@ -4488,6 +4514,28 @@
                     "Note": "With a triumphant shout, you inspire your allies. You cast a composition cantrip you know that normally takes a single action to cast."
                 }
             },
+            "BastionOfBlasphemies": {
+                "Background": {
+                    "ArtCollector": {
+                        "Prompt": "Have you chosen this artwork before?"
+                    },
+                    "BloodedByTheDead": {
+                        "BolsterTheBlood": {
+                            "Label": "Bolster the Blood"
+                        },
+                        "BolsterTheFury": {
+                            "Label": "Bolster the Fury"
+                        },
+                        "BolsterTheMind": {
+                            "Label": "Bolster the Mind",
+                            "Note": "You treat your level as 2 higher than it is to determine the effects of mental effects with the incapacitation trait utilized against you."
+                        }
+                    },
+                    "CurseMarked": {
+                        "ToggleLabel": "Curse-Marked — Cursed"
+                    }
+                }
+            },
             "Beastkin": {
                 "AnimalSenses": {
                     "Prompt": "Select a sense available to your inherent animal."
@@ -5644,6 +5692,9 @@
                         "Moderate": "Moderate"
                     }
                 },
+                "BonebloomRose": {
+                    "ToggleLabel": "Bonebloom Rose — At least 1 temporary Hit Point left"
+                },
                 "BracersOfDevotion": {
                     "BlessedArmamentToggle": "Bracers of Devotion — Bonus against Disarm",
                     "BlessedShieldToggle": "Bracers of Devotion — Blessed shield raised"
@@ -5694,6 +5745,12 @@
                 },
                 "CloakOfWavesAndClouds": {
                     "CutAirAndSea": "Cut Air and Sea"
+                },
+                "CommandersSignet": {
+                    "General":  {
+                        "EffectLabel": "Effect: General's Signet",
+                        "Label": "General's Signet"
+                    }
                 },
                 "Confabulator": {
                     "RollOptionLabel": "Performance with confabulator instrument"
@@ -5758,6 +5815,9 @@
                 },
                 "Erraticannon": {
                     "Note": "Each time you attack with the weapon, roll to determine the damage type of the Strike. @UUID[Compendium.pf2e.equipment-effects.Item.wmrINlK6twqfbJjo]{Effect: Erraticannon}"
+                },
+                "Fearcutter": {
+                    "Note": "When you critically hit a creature with the unholy trait with <em>Fearcutter</em>, the target becomes @UUID[Compendium.pf2e.conditionitems.Item.TBSHQspnbcqxsmjL]{Frightened 1}."
                 },
                 "FightersFork": {
                     "FluidLengthLabel": "Fighter's Fork — Fluid Length"
@@ -8360,6 +8420,9 @@
             "SpellEffectMindSwap": {
                 "RollOptionLabel": "Mind Swap — Impersonate the Other Target of Mind Swap"
             },
+            "SpellEffectOverstuff": {
+                "Addendum": "If you spend an action to end this condition, you succeed automatically."
+            },
             "SpellEffectPreciousMetals": {
                 "Copper": "Copper",
                 "Gold": "Gold",
@@ -9076,6 +9139,10 @@
                 "ForkTongued": {
                     "CriticalNote": "On a critical hit, the target takes persistent poison damage equal to the number of weapon damage dice.",
                     "VenomousJaws": "Venomous Jaws"
+                },
+                "VenomousCocktail": {
+                    "ChoiceLabel": "Choose a dose of poison or the grade of your weapon.",
+                    "PoisonDose": "Dose of Poison"
                 }
             },
             "VirtuosicPerformer": {
