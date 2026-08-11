@@ -385,6 +385,7 @@
                     "garundi": "Garundi",
                     "gfolian": "G'folian",
                     "girtablilu": "Girtablilu",
+                    "gnarefuroid": "Gnarefuroid",
                     "gnomish": "Gnomish",
                     "goblin": "Goblin",
                     "goloma": "Goloma",
@@ -500,6 +501,7 @@
                     "vishkanyan": "Vishkanya",
                     "vlaka": "Vlaka",
                     "vudrani": "Vudrani",
+                    "vulkari": "Vulkari",
                     "wayang": "Wayang",
                     "wildsong": "Wildsong",
                     "worlanisi": "Worlanisi",
@@ -883,6 +885,7 @@
         "ArmorPropertyRuneAssisting": "Assisting",
         "ArmorPropertyRuneBitter": "Bitter",
         "ArmorPropertyRuneColdResistant": "Cold-Resistant",
+        "ArmorPropertyRuneConvincing": "Convincing",
         "ArmorPropertyRuneDeathless": "Deathless",
         "ArmorPropertyRuneElectricityResistant": "Electricity-Resistant",
         "ArmorPropertyRuneEnergyAdaptive": "Energy Adaptive",
@@ -894,16 +897,19 @@
         "ArmorPropertyRuneGreaterAcidResistant": "Greater Acid-Resistant",
         "ArmorPropertyRuneGreaterAdvancing": "Greater Advancing",
         "ArmorPropertyRuneGreaterColdResistant": "Greater Cold-Resistant",
+        "ArmorPropertyRuneGreaterConvincing": "Greater Convincing",
         "ArmorPropertyRuneGreaterDread": "Greater Dread",
         "ArmorPropertyRuneGreaterElectricityResistant": "Greater Electricity-Resistant",
         "ArmorPropertyRuneGreaterFireResistant": "Greater Fire-Resistant",
         "ArmorPropertyRuneGreaterFortification": "Greater Fortification",
         "ArmorPropertyRuneGreaterInvisibility": "Greater Invisibility",
+        "ArmorPropertyRuneGreaterMoonweave": "Greater Moonweave",
         "ArmorPropertyRuneGreaterQuenching": "Greater Quenching",
         "ArmorPropertyRuneGreaterReady": "Greater Ready",
         "ArmorPropertyRuneGreaterShadow": "Greater Shadow",
         "ArmorPropertyRuneGreaterSlick": "Greater Slick",
         "ArmorPropertyRuneGreaterStanching": "Greater Stanching",
+        "ArmorPropertyRuneGreaterSunweave": "Greater Sunweave",
         "ArmorPropertyRuneGreaterSwallowSpike": "Greater Swallow-Spike",
         "ArmorPropertyRuneGreaterWinged": "Greater Winged",
         "ArmorPropertyRuneImmovable": "Immovable",
@@ -911,29 +917,39 @@
         "ArmorPropertyRuneInvisibility": "Invisibility",
         "ArmorPropertyRuneLesserDread": "Lesser Dread",
         "ArmorPropertyRuneMagnetizing": "Magnetizing",
+        "ArmorPropertyRuneMajorConvincing": "Major Convincing",
+        "ArmorPropertyRuneMajorMoonweave": "Major Moonweave",
         "ArmorPropertyRuneMajorQuenching": "Major Quenching",
         "ArmorPropertyRuneMajorShadow": "Major Shadow",
         "ArmorPropertyRuneMajorSlick": "Major Slick",
         "ArmorPropertyRuneMajorStanching": "Major Stanching",
+        "ArmorPropertyRuneMajorSunweave": "Major Sunweave",
         "ArmorPropertyRuneMajorSwallowSpike": "Major Swallow-Spike",
         "ArmorPropertyRuneMalleable": "Malleable",
         "ArmorPropertyRuneMisleading": "Misleading",
+        "ArmorPropertyRuneMobile": "Mobile",
         "ArmorPropertyRuneModerateDread": "Moderate Dread",
+        "ArmorPropertyRuneMoonweave": "Moonweave",
         "ArmorPropertyRunePortable": "Portable",
         "ArmorPropertyRuneQuenching": "Quenching",
         "ArmorPropertyRuneRaiment": "Raiment",
         "ArmorPropertyRuneReady": "Ready",
         "ArmorPropertyRuneRockBraced": "Rock-Braced",
+        "ArmorPropertyRuneSafeguarding": "Safeguarding",
+        "ArmorPropertyRuneSelfSealing": "Self-Sealing",
         "ArmorPropertyRuneShadow": "Shadow",
+        "ArmorPropertyRuneSidestepping": "Sidestepping",
         "ArmorPropertyRuneSinisterKnight": "Sinister Knight",
         "ArmorPropertyRuneSizeChanging": "Size-Changing",
         "ArmorPropertyRuneSlick": "Slick",
         "ArmorPropertyRuneSoaring": "Soaring",
         "ArmorPropertyRuneSpellwatch": "Spellwatch",
         "ArmorPropertyRuneStanching": "Stanching",
+        "ArmorPropertyRuneSunweave": "Sunweave",
         "ArmorPropertyRuneSwallowSpike": "Swallow-Spike",
         "ArmorPropertyRuneTrueQuenching": "True Quenching",
         "ArmorPropertyRuneTrueStanching": "True Stanching",
+        "ArmorPropertyRuneUnnerving": "Unnerving",
         "ArmorPropertyRuneWinged": "Winged",
         "ArmorResilientRune": "Resilient",
         "ArmorSpeedLabel": "Speed Penalty",
@@ -4527,6 +4543,7 @@
         "TraitAmphibious": "Amphibious",
         "TraitAnadi": "Anadi",
         "TraitAnalog": "Analog",
+        "TraitAncestry": "Ancestry",
         "TraitAnchoring": "Anchoring",
         "TraitAndroid": "Android",
         "TraitAngel": "Angel",
@@ -6489,6 +6506,9 @@
             "deathdrinking": {
                 "Name": "Deathdrinking"
             },
+            "deflecting": {
+                "Name": "Deflecting"
+            },
             "demolishing": {
                 "Name": "Demolishing"
             },
@@ -6497,6 +6517,9 @@
             },
             "energizing": {
                 "Name": "Energizing"
+            },
+            "energyVulnerability": {
+                "Name": "Energy Vulnerability"
             },
             "extending": {
                 "Name": "Extending"
@@ -6595,6 +6618,9 @@
                 "Note": {
                     "criticalSuccess": "On a critical hit, the undead creature is @UUID[Compendium.pf2e.conditionitems.Item.MIRkyAjyBeXivMa7]{Enfeebled 1} and @UUID[Compendium.pf2e.conditionitems.Item.e1XGnhKNSQIm5IXg]{Stupefied 1} as long as it has the persistent damage from this rune."
                 }
+            },
+            "greaterEnergyVulnerability": {
+                "Name": "Greater Energy Vulnerability"
             },
             "greaterExtending": {
                 "Name": "Greater Extending"
@@ -7092,7 +7118,7 @@
             },
             "prone": {
                 "name": "Prone",
-                "rules": "<p>You're lying on the ground. You are off-guard and take a -2 circumstance penalty to attack rolls. The only move actions you can use while you're prone are Crawl and Stand. Standing up ends the prone condition. You can Take Cover while prone to hunker down and gain cover against ranged attacks, even if you don't have an object to get behind, gaining a +4 circumstance bonus to AC against ranged attacks (but you remain off-guard).</p>\n<p>If you would be knocked prone while you're Climbing or Flying, you fall. You can't be knocked prone when Swimming.</p>",
+                "rules": "<p>You're lying on the ground. You are off-guard and take a -2 circumstance penalty to attack rolls. The only move actions you can use while you're prone are Crawl and Stand. Standing up ends the prone condition. You can Take Cover while prone to hunker down and gain greater cover against ranged attacks, even if you don't have an object to get behind, which grants you a +4 circumstance bonus to AC against ranged attacks (but you remain off-guard).</p>\n<p>If you would be knocked prone while you're Climbing or Flying, you fall. You can't be knocked prone when Swimming.</p>",
                 "summary": "You're lying on the ground and are easier to attack."
             },
             "quickened": {

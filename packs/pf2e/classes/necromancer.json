@@ -183,15 +183,11 @@
             "remaster": true,
             "title": "Pathfinder Impossible Magic"
         },
-        "rules": [
-            {
-                "key": "GrantItem"
-            }
-        ],
+        "rules": [],
         "savingThrows": {
             "fortitude": 2,
             "reflex": 1,
-            "will": 2
+            "will": 1
         },
         "skillFeatLevels": {
             "value": [

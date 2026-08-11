@@ -5,14 +5,14 @@
     "name": "Sanguine Transference",
     "system": {
         "actionType": {
-            "value": "action"
+            "value": "passive"
         },
         "actions": {
-            "value": 1
+            "value": null
         },
         "category": "class",
         "description": {
-            "value": "<p>You transfer your blood and soul into a thrall. You learn the sanguine transference grave spell.</p>"
+            "value": "<p>You transfer your blood and soul into a thrall. You learn the @UUID[Compendium.pf2e.spells-srd.Item.Sanguine Transference] grave spell.</p>"
         },
         "level": {
             "value": 8
