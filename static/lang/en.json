@@ -346,8 +346,10 @@
                     "anugobu": "Anugobu",
                     "arboreal": "Arboreal",
                     "arcadian": "Arcadian",
+                    "atraxid": "Atraxid",
                     "azlanti": "Azlanti",
                     "bantridi": "Bantridi",
+                    "binnaquid": "Binnaquid",
                     "boggard": "Boggard",
                     "brenneri": "Brenneri",
                     "brethedan": "Brethedan",
@@ -365,6 +367,7 @@
                     "DetailsPlaceholder": "Caveats, other unusual specifics",
                     "diabolic": "Diabolic",
                     "diasporan": "Diasporan",
+                    "dorjosh": "Dorjosh",
                     "draconic": "Draconic",
                     "drooni": "Drooni",
                     "dwarven": "Dwarven",
@@ -415,11 +418,15 @@
                     "kitsune": "Kitsune",
                     "kothama": "Kothama",
                     "kovintal": "Kovintal",
+                    "krethiskarian": "Krethiskarian",
                     "kucharn": "Kucharn",
+                    "kuxoran": "Kuxoran",
                     "lashunta": "Lashunta",
+                    "lazelan": "Lazelan",
                     "lirgeni": "Lirgeni",
                     "madrosarai": "Madrosarai",
                     "mahwek": "Mahwek",
+                    "maraquoi": "Maraquoi",
                     "maratan": "Maratan",
                     "migo": "Mi-Go",
                     "minaten": "Minatan",
@@ -507,6 +514,7 @@
                     "worlanisi": "Worlanisi",
                     "wyrwood": "Wyrwood",
                     "xanmba": "Xanmba",
+                    "xofirthian": "Xofirthian",
                     "yaksha": "Yaksha",
                     "yithian": "Yithian",
                     "ysoki": "Ysoki"
@@ -661,7 +669,8 @@
                     "Fly": "Fly",
                     "Label": "{type} Speed",
                     "Land": "Land",
-                    "Swim": "Swim"
+                    "Swim": "Swim",
+                    "Travel": "Travel"
                 }
             },
             "NPC": {
@@ -671,9 +680,10 @@
                 },
                 "Configure": {
                     "Lootable": {
+                        "AutomationSettings": "Automation Settings",
                         "DefaultLootable": "Global Default (Lootable)",
                         "DefaultNotLootable": "Global Default (Not Lootable)",
-                        "Hint": "Set whether this NPC becomes lootable by players upon its demise. The global default can be configured in <a>Automation Settings</a>.",
+                        "Hint": "Set whether this NPC becomes lootable by players upon its demise. The global default can be configured in {settings}.",
                         "Label": "Lootable?",
                         "Lootable": "Lootable",
                         "NotLootable": "Not Lootable"
@@ -1832,8 +1842,8 @@
             "Base": "Base: {formula}"
         },
         "InlineTemplateErrors": {
+            "DistanceInvalid": "Error in @Template: distance {distance} is not valid",
             "DistanceMissing": "Error in @Template: distance parameter is mandatory",
-            "DistanceNoNumber": "Error in @Template: dimension {distance} is not a number",
             "TypeMissing": "Error in @Template: type parameter is mandatory",
             "TypeUnsupported": "Error in @Template: type {type} is not supported",
             "WidthNoNumber": "Error in @Template: width {width} is not a number"
@@ -3352,6 +3362,7 @@
         "ModifiersTitle": "Modifiers",
         "MultipleAttackPenalty": "Multiple Attack Penalty",
         "MysticStrikes": "Mystical Strikes",
+        "NameLabel": "Name",
         "NPC": {
             "Abilities": {
                 "Glossary": {
@@ -3607,6 +3618,8 @@
         "PreciousMaterialSovereignSteel": "Sovereign Steel",
         "PreciousMaterialSovereignSteelDescription": "Created by Black Sovereign Kevoth-Kul, this unique alloy of cold iron and the skymetal noqual can provide protection from magical assault. The process of cold-forging the two materials together is quite complicated and precise. Characters in search of sovereign steel weapons and armor will almost assuredly have to travel to Starfall to procure gear made from this rare alloy. While some believe it possible to craft shields of sovereign steel as well, in one of his fits, Kevoth-Kul yelled that he had no use for them and banned anyone from making such a thing. So far, his smiths have been too afraid to confirm whether or not it was a joke. All sovereign steel items (including weapon and armor below) have a +4 circumstance bonus on saves against magic that the item makes, and grant their bonus to saves the owner makes specifically to protect the item from magic (such as against the rusting grasp spell).",
         "PreciousMaterialStandardGrade": "Standard-Grade",
+        "PreciousMaterialThroneglass": "Throneglass",
+        "PreciousMaterialThroneglassDescription": "Throneglass is an incredibly rare resource created during the violence of Earthfall 10,000 years ago, when the impact of falling stars enhanced certain shattered panes of green glass built into the architecture of important buildings in Azlant—particularly the Imperial Palace. As a material, throneglass is as strong as steel, but the ancient methods of crafting it into weapons have long been lost. Low-grade throneglass offers no additional benefit to a weapon crafted from it other than the cosmetic and intrinsic value of the precious material, but standard-grade and high-grade throneglass can retain psychic power and then release it through a strike. When a creature wielding a standard-grade or high-grade throneglass weapon succeeds at a saving throw against a mental effect, the weapon stores some of that energy and holds it for a future attack. A standard-grade weapon can hold this energy for 1 round before it dissipates harmlessly, while a high-grade one can hold the energy for 1 minute. The next time you Strike a creature with a throneglass weapon with stored energy, the creature struck must attempt a Will save (DC 24 for standard-grade throneglass, or DC 35 for high-grade throneglass) to avoid becoming @UUID[Compendium.pf2e.conditionitems.Item.e1XGnhKNSQIm5IXg]{Stupefied 1} for 1 round (or @UUID[Compendium.pf2e.conditionitems.Item.e1XGnhKNSQIm5IXg]{Stupefied 2} on a critical failure).",
         "PreciousMaterialWarpglass": "Warpglass",
         "PreciousMaterialWarpglassDescription": "This bizarre substance is fashioned from the raw, chaotic quintessence of the Maelstrom. It can be fashioned into weapons and items, but is too unstable to make into useful armor or shields. Raw warpglass is an opalescent glassy material with surprising strength. When worked, it changes its appearance-though not its properties-to appear as random striations of other metals and types of stone.",
         "PreparationTypeInnate": "Innate",
@@ -4232,7 +4245,7 @@
         },
         "ScoreTitle": "Score",
         "SelectLabel": "Select",
-        "SellAllTreasureQuestion": "Convert all treasure items into coins",
+        "SellAllTreasureQuestion": "Convert all treasure items into coins?",
         "SellAllTreasureTitle": "Sell All Treasure",
         "SellItemConfirmHeader": "Sell Confirmation",
         "SellItemQuestion": "Are you sure you want to sell {item}?",
@@ -4595,6 +4608,7 @@
         "TraitAstrazoan": "Astrazoan",
         "TraitAsura": "Asura",
         "TraitAthamaru": "Athamaru",
+        "TraitAtraxid": "Atraxid",
         "TraitAttached": "Attached",
         "TraitAttachedToAThrownWeapon": "Attached to a Thrown Weapon",
         "TraitAttachedToCrossbowOrFirearm": "Attached to Crossbow or Firearm",
@@ -4624,6 +4638,7 @@
         "TraitBarding": "Barding",
         "TraitBeast": "Beast",
         "TraitBeastkin": "Beastkin",
+        "TraitBinnaquid": "Binnaquid",
         "TraitBiotech": "Biotech",
         "TraitBleed": "Bleed",
         "TraitBlight": "Blight",
@@ -5012,6 +5027,7 @@
         "TraitDescriptionInventor": "This indicates abilities from the inventor class.",
         "TraitDescriptionInvested": "A character can invest only 10 magical items that have the invested trait. None of the magical effects of the item apply if the character hasn't invested it, nor can it be activated, though the character still gains any normal benefits from wearing the physical item (like a hat keeping rain off their head).",
         "TraitDescriptionInvestigator": "This indicates abilities from the investigator class.",
+        "TraitDescriptionInvocation": "An invocation action allows a runesmith to surge power through their rune by uttering its true name. Invocation requires you to be able to speak clearly in a strong voice and requires that you be within 30 feet of the target rune or runes unless another ability changes this. These actions include the Invoke Rune action, which makes the rune's invocation take place, then causes the rune to fade away. Using Invoke Rune normally allows you to invoke two runes, but other abilities that include the Invoke Rune action often change that number or the specific runes you can invoke.",
         "TraitDescriptionIzalguun": "A creature with this trait is a member of the izalguun ancestry. They are large, six-limbed isolationist humanoids capable of adopting a bipedal or quadrupedal stance. An ability with this trait can be used or selected only by izalguuns.",
         "TraitDescriptionJousting": "The weapon is suited for mounted combat with a harness or similar means. When mounted, if you moved at least 10 feet on the action before your attack, add a circumstance bonus to damage for that attack equal to the number of damage dice for the weapon. In addition, while mounted, you can wield the weapon in one hand, changing the damage die to the listed value.",
         "TraitDescriptionKami": "Kami are spirits of the Material Plane that bond with a specific object or place.",
@@ -5426,6 +5442,7 @@
         "TraitHalfling": "Halfling",
         "TraitHampering": "Hampering",
         "TraitHantu": "Hantu",
+        "TraitHardor": "Hardor",
         "TraitHarnessed": "Harnessed",
         "TraitHarrowCourt": "Harrow Court",
         "TraitHaunt": "Haunt",
@@ -5533,6 +5550,7 @@
         "TraitManifestation": "Manifestation",
         "TraitManipulate": "Manipulate",
         "TraitMaraquoi": "Maraquoi",
+        "TraitMecenaic": "Mecenaic",
         "TraitMechanical": "Mechanical",
         "TraitMental": "Mental",
         "TraitMerfolk": "Merfolk",
@@ -5584,6 +5602,7 @@
         "TraitOperative": "Operative",
         "TraitOracle": "Oracle",
         "TraitOrc": "Orc",
+        "TraitOrd": "Ord",
         "TraitOread": "Oread",
         "TraitOrocoran": "Orocoran",
         "TraitOsharu": "Osharu",
@@ -5604,6 +5623,7 @@
         "TraitPervasiveMagic": "Pervasive Magic",
         "TraitPetitioner": "Petitioner",
         "TraitPhantom": "Phantom",
+        "TraitPhasorq": "Phasorq",
         "TraitPhysical": "Physical",
         "TraitPiercing": "Piercing",
         "TraitPlant": "Plant",
@@ -7188,6 +7208,12 @@
             }
         },
         "identification": {
+            "Breakdown": {
+                "Adjustment": "{adjustment} {value}",
+                "Base": "Level {level} DC {dc}",
+                "OffTradition": "Off-tradition {value}"
+            },
+            "Difficulty": "Difficulty",
             "DisplayDetails": "Display Details",
             "Identified": "Identified",
             "Identify": "Identify Item",
