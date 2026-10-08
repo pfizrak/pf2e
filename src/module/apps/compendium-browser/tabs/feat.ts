@@ -4,6 +4,7 @@ import { CompendiumBrowser } from "../browser.svelte.ts";
 import { ContentTabName } from "../data.ts";
 import { CompendiumBrowserTab } from "./base.svelte.ts";
 import { CompendiumBrowserIndexData, FeatFilters } from "./data.ts";
+import { adjustFeatTraitsAndCategory } from "@item/feat/helpers.ts";
 
 export class CompendiumBrowserFeatTab extends CompendiumBrowserTab {
     tabName: ContentTabName = "feat";
@@ -88,6 +89,8 @@ export class CompendiumBrowserFeatTab extends CompendiumBrowserTab {
                         }
                     }
                 }
+
+                adjustFeatTraitsAndCategory(system);
                 const category = system.category;
                 const type = featData.type;
                 const traits: string[] = system.traits.value;
@@ -131,7 +134,9 @@ export class CompendiumBrowserFeatTab extends CompendiumBrowserTab {
         // Filters
         this.filterData.checkboxes.category.options = this.generateCheckboxOptions(CONFIG.PF2E.featCategories);
         this.filterData.checkboxes.skills.options = this.generateCheckboxOptions(CONFIG.PF2E.skills);
-        this.filterData.checkboxes.rarity.options = this.generateCheckboxOptions(CONFIG.PF2E.rarityTraits);
+        this.filterData.checkboxes.rarity.options = this.generateCheckboxOptions(CONFIG.PF2E.rarityTraits, {
+            sort: false,
+        });
         this.filterData.source.options = this.generateSourceCheckboxOptions(publications);
         this.filterData.traits.options = this.generateMultiselectOptions(CONFIG.PF2E.featTraits);
 

@@ -102,6 +102,7 @@ interface CharacterAttributesSource extends ActorAttributesSource {
     hp: {
         value: number;
         temp: number;
+        tempSource?: string;
         /** Stamina points: present if Stamina variant is enabled  */
         sp?: { value: number };
     };
@@ -283,16 +284,11 @@ interface CharacterSystemData extends Omit<CharacterSystemSource, SourceOmission
 
 type SourceOmission = "attributes" | "customModifiers" | "perception" | "resources" | "saves" | "speed" | "traits";
 
-interface CharacterSkillData extends SkillData {
-    attribute: AttributeString;
+interface CharacterSkillData extends Required<SkillData> {
     /** The proficiency rank ("TEML") */
     rank: ZeroToFour;
     /** Whether this skill is subject to an armor check penalty */
     armor: boolean;
-    /** Is this skill a Lore skill? */
-    lore?: boolean;
-    /** If this is a lore skill, what item it came from */
-    itemId: string | null;
 }
 
 interface CharacterAbilityData extends AbilityData {
